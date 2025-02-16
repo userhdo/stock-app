@@ -1,0 +1,52 @@
+/* 全域樣式 */
+body {
+    background-color: #000000;
+    color: #ffffff;
+    font-family: "微軟正黑體", sans-serif;
+}
+
+/* 股票卡片樣式 */
+.stock-card {
+    background-color: #333333;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.stock-card.alert {
+    border: 2px solid #ffa500;
+}
+
+.stock-price-up {
+    color: #ff4444;
+}
+
+.stock-price-down {
+    color: #44ff44;
+}
+
+/* 新增股票按鈕 */
+.add-stock-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+}
+
+.add-stock-btn button {
+    width: 60px;
+    height: 60px;
+    font-size: 24px;
+    background-color: #ffa500;
+    border: none;
+}
+
+/* 使用者下拉選單 */
+.dropdown-menu {
+    background-color: #333333;
+    border: 1px solid #666666;
+}
+
+.dropdown-menu p {
+    color: #ffffff;
+} 
