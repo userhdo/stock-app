@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>股票設定</title>
+  <style>
+    body { background-color: black; color: white; font-family: Arial, sans-serif; padding: 20px; }
+    .section { margin-bottom: 20px; }
+    .divider { border-bottom: 1px solid #777; margin: 10px 0; }
+    .button { background-color: orange; color: black; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div class="section">
+    <h1 id="stock-title">股票資訊</h1>
+    <p id="stock-basic">載入中...</p>
+  </div>
+  
+  <div class="section">
+    <h2>圖表展示</h2>
+    <!-- TODO: 整合圖表庫 (例如 Chart.js) 來呈現股價、RSI、MACD、均線 -->
+    <p>[圖表區域]</p>
+    <select id="chart-days">
+      <option value="1">當日</option>
+      <option value="5">五日</option>
+      <option value="30">一月</option>
+      <option value="180">六月</option>
+      <option value="365">一年</option>
+      <option value="1825">五年</option>
+    </select>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="section">
+    <h2>買賣價格設定</h2>
+    <p>可買價格：<span id="buy-price">待計算</span></p>
+    <p>可賣價格：<span id="sell-price">待計算</span></p>
+    <button class="button" onclick="location.href='condition_setting.html'">設定條件</button>
+  </div>
+  
+  <div class="divider"></div>
+  
+  <div class="section">
+    <h2>交易紀錄</h2>
+    <div id="transaction-records">
+      <!-- 交易紀錄列表 -->
+      <p>[暫無交易紀錄]</p>
+    </div>
+    <button class="button" onclick="location.href='new_transaction.html'">新增交易紀錄</button>
+  </div>
+  
+  <script>
+    // 簡單從 URL 中取得參數，並模擬載入股票資訊
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+    const identifier = getQueryParam("identifier") || getQueryParam("code") || "未知股票";
+    document.getElementById("stock-title").innerText = identifier + " - 股票設定";
+    document.getElementById("stock-basic").innerText = "股票基本資料、現價、股數等資料將由 API 載入。";
+  </script>
+</body>
+</html>
