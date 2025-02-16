@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>條件設定</title>
+  <style>
+    body { background-color: black; color: white; font-family: Arial, sans-serif; padding: 20px; }
+    .section { margin-bottom: 20px; }
+    .button { background-color: orange; color: black; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; }
+    label { display: block; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+  <h1>條件設定</h1>
+  <div class="section">
+    <label>今日的：<input type="checkbox" id="currentPrice" checked disabled value="現價"></label>
+    <label>邏輯：
+      <select id="logic">
+        <option value=">">大於</option>
+        <option value="<">小於</option>
+        <option value=">=">大於等於</option>
+        <option value="<=">小於等於</option>
+      </select>
+    </label>
+    <label>日期：
+      <select id="days">
+        <option value="5">五日內</option>
+        <option value="30">30日內</option>
+        <option value="60">60日內</option>
+        <option value="90">90日內</option>
+        <option value="180">180日內</option>
+        <option value="360">360日內</option>
+      </select>
+    </label>
+    <label>標準：
+      <select id="standard">
+        <option value="均價">均價</option>
+        <option value="市值">市值</option>
+      </select>
+    </label>
+    <label>比例：
+      <select id="ratio">
+        <option value="0.01">1%</option>
+        <option value="0.02">2%</option>
+        <option value="0.03">3%</option>
+        <option value="0.05">5%</option>
+        <option value="0.10">10%</option>
+      </select>
+    </label>
+  </div>
+  <button class="button" id="applyBtn">應用條件</button>
+
+  <script>
+    document.getElementById("applyBtn").addEventListener("click", () => {
+      // 簡單示範計算
+      const logic = document.getElementById("logic").value;
+      const days = document.getElementById("days").value;
+      const standard = document.getElementById("standard").value;
+      const ratio = parseFloat(document.getElementById("ratio").value);
+      // 模擬計算結果，實際上應從後端或利用歷史數據計算
+      const result = standard + "±" + (ratio * 100) + "% (依 " + days + "日數據)";
+      alert("設定已應用：\n" + result);
+      // 設定完成後返回上一頁（例如股票設定頁面）
+      window.history.back();
+    });
+  </script>
+</body>
+</html>
