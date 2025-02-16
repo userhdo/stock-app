@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>股票買賣時機網頁</title>
+  <style>
+    /* 全局設定：黑底白字 */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: black;
+      color: white;
+    }
+    /* 主要容器 */
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    /* 股票卡片：灰底、圓角 */
+    .stock-card {
+      background-color: #444;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
+      position: relative;
+      border: 2px solid transparent;
+    }
+    /* 若現價不在合理範圍內，增加橘色邊框 */
+    .stock-card.outline {
+      border-color: orange;
+    }
+    /* 股票資訊排列 */
+    .stock-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    /* 現價設定：上漲用紅字，下跌用綠字 */
+    .stock-price {
+      font-size: 1.2em;
+    }
+    .stock-price.up {
+      color: red;
+    }
+    .stock-price.down {
+      color: green;
+    }
+    /* 新增股票按鈕：橘色圓圈加號 */
+    .add-stock {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 60px;
+      background-color: orange;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 36px;
+      color: black;
+      text-decoration: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 股票卡片示例：依照條件決定是否加上 .outline -->
+    <div class="stock-card outline">
+      <div class="stock-info">
+        <div>
+          <strong>2330</strong> 台積電<br>
+          股數: 100
+        </div>
+        <div>
+          <!-- 假設現價高於昨日收盤，用 red 顯示 -->
+          <div class="stock-price up">現價: 600</div>
+          <div>可買價: 590</div>
+        </div>
+      </div>
+    </div>
+    <div class="stock-card">
+      <div class="stock-info">
+        <div>
+          <strong>2317</strong> 鴻海<br>
+          股數: 50
+        </div>
+        <div>
+          <!-- 假設現價低於昨日收盤，用 green 顯示 -->
+          <div class="stock-price down">現價: 100</div>
+          <div>可買價: 95</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 新增股票按鈕，連結至新增股票頁面 -->
+  <a class="add-stock" href="add_stock.html">+</a>
+</body>
+</html>
