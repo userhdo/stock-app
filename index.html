@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>股票買賣時機網頁</title>
+  <title>股票買賣時機網頁 - 主頁</title>
   <style>
-    /* 全局設定：黑底白字 */
     body {
       margin: 0;
       padding: 0;
@@ -13,13 +12,11 @@
       background-color: black;
       color: white;
     }
-    /* 主要容器 */
     .container {
       max-width: 800px;
       margin: 0 auto;
       padding: 20px;
     }
-    /* 股票卡片：灰底、圓角 */
     .stock-card {
       background-color: #444;
       border-radius: 8px;
@@ -28,17 +25,14 @@
       position: relative;
       border: 2px solid transparent;
     }
-    /* 若現價不在合理範圍內，增加橘色邊框 */
     .stock-card.outline {
       border-color: orange;
     }
-    /* 股票資訊排列 */
     .stock-info {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    /* 現價設定：上漲用紅字，下跌用綠字 */
     .stock-price {
       font-size: 1.2em;
     }
@@ -48,7 +42,6 @@
     .stock-price.down {
       color: green;
     }
-    /* 新增股票按鈕：橘色圓圈加號 */
     .add-stock {
       position: fixed;
       bottom: 20px;
@@ -69,36 +62,57 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- 股票卡片示例：依照條件決定是否加上 .outline -->
-    <div class="stock-card outline">
-      <div class="stock-info">
-        <div>
-          <strong>2330</strong> 台積電<br>
-          股數: 100
-        </div>
-        <div>
-          <!-- 假設現價高於昨日收盤，用 red 顯示 -->
-          <div class="stock-price up">現價: 600</div>
-          <div>可買價: 590</div>
-        </div>
-      </div>
-    </div>
-    <div class="stock-card">
-      <div class="stock-info">
-        <div>
-          <strong>2317</strong> 鴻海<br>
-          股數: 50
-        </div>
-        <div>
-          <!-- 假設現價低於昨日收盤，用 green 顯示 -->
-          <div class="stock-price down">現價: 100</div>
-          <div>可買價: 95</div>
-        </div>
-      </div>
-    </div>
+  <div class="container" id="stock-container">
+    <!-- 股票卡片將動態載入 -->
   </div>
-  <!-- 新增股票按鈕，連結至新增股票頁面 -->
   <a class="add-stock" href="add_stock.html">+</a>
+
+  <script>
+    // 模擬 API 回傳股票數據
+    const stockData = [
+      { code: "2330", name: "台積電", shares: 100, currentPrice: 600, buyPrice: 590, sellPrice: 610, yesterdayClose: 605 },
+      { code: "2317", name: "鴻海", shares: 50, currentPrice: 100, buyPrice: 95, sellPrice: 105, yesterdayClose: 102 }
+    ];
+    
+    // 假設未來可利用 fetch("https://api.example.com/stocks") 取得數據
+    function renderStocks(data) {
+      const container = document.getElementById("stock-container");
+      container.innerHTML = "";
+      data.forEach(stock => {
+        // 判斷邊框是否需要橘色
+        const outlineClass = (stock.currentPrice < stock.buyPrice || stock.currentPrice > stock.sellPrice) ? " outline" : "";
+        // 判斷現價文字顏色
+        const priceClass = (stock.currentPrice > stock.yesterdayClose) ? "up" : "down";
+        const card = document.createElement("div");
+        card.className = "stock-card" + outlineClass;
+        card.innerHTML = `
+          <div class="stock-info">
+            <div>
+              <strong>${stock.code}</strong> ${stock.name}<br>
+              股數: ${stock.shares}
+            </div>
+            <div>
+              <div class="stock-price ${priceClass}">現價: ${stock.currentPrice}</div>
+              <div>可買價: ${stock.buyPrice}</div>
+            </div>
+          </div>
+        `;
+        // 可加入點擊事件，跳轉到股票設定頁面並傳遞股票代碼
+        card.addEventListener("click", () => {
+          window.location.href = `stock_setting.html?code=${stock.code}`;
+        });
+        container.appendChild(card);
+      });
+    }
+    
+    // 模擬自動載入（實際可用 fetch API 取得資料）
+    document.addEventListener("DOMContentLoaded", () => {
+      renderStocks(stockData);
+      // 若使用 fetch：
+      // fetch("https://api.example.com/stocks")
+      //   .then(response => response.json())
+      //   .then(data => renderStocks(data));
+    });
+  </script>
 </body>
 </html>
