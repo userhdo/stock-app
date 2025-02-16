@@ -1,118 +1,57 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>股票買賣時機網頁 - 主頁</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background-color: black;
-      color: white;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 20px;
-    }
-    .stock-card {
-      background-color: #444;
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 15px;
-      position: relative;
-      border: 2px solid transparent;
-    }
-    .stock-card.outline {
-      border-color: orange;
-    }
-    .stock-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .stock-price {
-      font-size: 1.2em;
-    }
-    .stock-price.up {
-      color: red;
-    }
-    .stock-price.down {
-      color: green;
-    }
-    .add-stock {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 60px;
-      background-color: orange;
-      border-radius: 50%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 36px;
-      color: black;
-      text-decoration: none;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>股票買賣評估</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- 自訂 CSS -->
+    <link href="css/style.css" rel="stylesheet">
 </head>
-<body>
-  <div class="container" id="stock-container">
-    <!-- 股票卡片將動態載入 -->
-  </div>
-  <a class="add-stock" href="add_stock.html">+</a>
+<body class="bg-dark text-white">
+    <!-- 頂部導航欄 -->
+    <nav class="navbar navbar-dark bg-dark border-bottom border-secondary">
+        <div class="container-fluid">
+            <span class="navbar-brand">股票買賣評估</span>
+            <div class="user-profile">
+                <img src="" alt="使用者頭像" id="userAvatar" class="rounded-circle" style="width: 40px; height: 40px; cursor: pointer;">
+            </div>
+        </div>
+    </nav>
 
-  <script>
-    // 模擬 API 回傳股票數據
-    const stockData = [
-      { code: "2330", name: "台積電", shares: 100, currentPrice: 600, buyPrice: 590, sellPrice: 610, yesterdayClose: 605 },
-      { code: "2317", name: "鴻海", shares: 50, currentPrice: 100, buyPrice: 95, sellPrice: 105, yesterdayClose: 102 }
-    ];
-    
-    // 假設未來可利用 fetch("https://api.example.com/stocks") 取得數據
-    function renderStocks(data) {
-      const container = document.getElementById("stock-container");
-      container.innerHTML = "";
-      data.forEach(stock => {
-        // 判斷邊框是否需要橘色
-        const outlineClass = (stock.currentPrice < stock.buyPrice || stock.currentPrice > stock.sellPrice) ? " outline" : "";
-        // 判斷現價文字顏色
-        const priceClass = (stock.currentPrice > stock.yesterdayClose) ? "up" : "down";
-        const card = document.createElement("div");
-        card.className = "stock-card" + outlineClass;
-        card.innerHTML = `
-          <div class="stock-info">
-            <div>
-              <strong>${stock.code}</strong> ${stock.name}<br>
-              股數: ${stock.shares}
-            </div>
-            <div>
-              <div class="stock-price ${priceClass}">現價: ${stock.currentPrice}</div>
-              <div>可買價: ${stock.buyPrice}</div>
-            </div>
-          </div>
-        `;
-        // 可加入點擊事件，跳轉到股票設定頁面並傳遞股票代碼
-        card.addEventListener("click", () => {
-          window.location.href = `stock_setting.html?code=${stock.code}`;
-        });
-        container.appendChild(card);
-      });
-    }
-    
-    // 模擬自動載入（實際可用 fetch API 取得資料）
-    document.addEventListener("DOMContentLoaded", () => {
-      renderStocks(stockData);
-      // 若使用 fetch：
-      // fetch("https://api.example.com/stocks")
-      //   .then(response => response.json())
-      //   .then(data => renderStocks(data));
-    });
-  </script>
+    <!-- 使用者資訊下拉選單 -->
+    <div id="userDropdown" class="dropdown-menu" style="display: none;">
+        <div class="px-3 py-2">
+            <p id="userEmail" class="mb-1"></p>
+            <p id="loginMethod" class="mb-2"></p>
+            <button id="logoutBtn" class="btn btn-outline-danger w-100">登出</button>
+        </div>
+    </div>
+
+    <!-- 股票列表容器 -->
+    <div class="container mt-4">
+        <div id="stockList" class="row g-4">
+            <!-- 股票卡片將由 JavaScript 動態生成 -->
+        </div>
+    </div>
+
+    <!-- 新增股票按鈕 -->
+    <div class="add-stock-btn">
+        <button class="btn btn-warning rounded-circle" onclick="location.href='addStock.html'">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/your-code.js"></script>
+    <!-- 自訂 JavaScript -->
+    <script src="js/api.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/main.js"></script>
 </body>
-</html>
+</html> 
